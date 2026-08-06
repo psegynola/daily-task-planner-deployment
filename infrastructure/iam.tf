@@ -7,6 +7,7 @@ resource "aws_iam_user" "cd" {
   name = "daily-task-planner-cd"
 }
 
+#this creates the access key for the CD user
 resource "aws_iam_access_key" "cd" {
   user = aws_iam_user.cd.name
 }
