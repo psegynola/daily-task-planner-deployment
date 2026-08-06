@@ -36,6 +36,8 @@ data "aws_iam_policy_document" "tf_backend" {
       "arn:aws:s3:::${var.tf_state_bucket}/daily-task-planner/*",
     ]
   }
+
+  #this are the permissions for the dynamodb table
   statement {
     effect = "Allow"
     actions = [
