@@ -77,6 +77,7 @@ data "aws_iam_policy_document" "ecr" {
     resources = ["*"]
   }
 
+  #explain more about this statement
   statement {
     effect = "Allow"
     actions = [
