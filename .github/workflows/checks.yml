@@ -8,3 +8,4 @@ jobs:
   test-lint:
     name: Test and Lint
     uses: ./.github/workflows/test-lint.yml
+    secrets:
