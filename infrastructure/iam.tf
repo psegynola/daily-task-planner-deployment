@@ -18,6 +18,8 @@ resource "aws_iam_access_key" "cd" {
 
 #This builds the policy document
 data "aws_iam_policy_document" "tf_backend" {
+
+  #this statement is for the entire s3 bucket
   statement {
     effect    = "Allow"
     actions   = ["s3:ListBucket"]
