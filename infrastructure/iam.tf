@@ -14,6 +14,7 @@ resource "aws_iam_access_key" "cd" {
 # Policy for Terraform backend to S3 and DynamoDB access #
 #########################################################
 
+#This builds the policy document
 data "aws_iam_policy_document" "tf_backend" {
   statement {
     effect    = "Allow"
