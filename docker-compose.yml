@@ -1,0 +1,14 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      SECRET_KEY: local-development-secret
+      DATABASE_URL: sqlite:////data/tasks.db
+    volumes:
+      - task-data:/data
+    restart: unless-stopped
+
+volumes:
+  task-data:

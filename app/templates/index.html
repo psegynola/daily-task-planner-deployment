@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Daily Task Planner</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">Deployment Practice Project</p>
+      <h1>Daily Task Planner</h1>
+      <p>Plan each day, save your tasks, and mark them complete.</p>
+    </div>
+    <nav class="week-nav">
+      <a href="{{ url_for('main.index', date=(days[0] - timedelta(days=7)).isoformat()) }}">← Previous</a>
+      <a href="{{ url_for('main.index') }}">Today</a>
+      <a href="{{ url_for('main.index', date=(days[0] + timedelta(days=7)).isoformat()) }}">Next →</a>
+    </nav>
+  </header>
+
+  <main class="planner-grid">
+    {% for day in days %}
+    <section class="day-card {% if day == selected %}selected{% endif %}">
+      <div class="day-heading">
+        <div>
+          <h2>{{ day.strftime('%A') }}</h2>
+          <p>{{ day.strftime('%b %d, %Y') }}</p>
+        </div>
+        <span>{{ grouped[day]|length }} task{% if grouped[day]|length != 1 %}s{% endif %}</span>
+      </div>
+
+      <form class="add-form" method="post" action="{{ url_for('main.create_task') }}">
+        <input type="hidden" name="task_date" value="{{ day.isoformat() }}">
+        <input name="title" maxlength="200" placeholder="Add a task..." required aria-label="Task title">
+        <button type="submit">Add</button>
+      </form>
+
+      <ul class="task-list">
+        {% for task in grouped[day] %}
+        <li class="task-row {% if task.completed %}done{% endif %}">
+          <form method="post" action="{{ url_for('main.toggle_task', task_id=task.id) }}">
+            <button class="check" title="Toggle completion" aria-label="Toggle completion">
+              {% if task.completed %}✓{% else %}○{% endif %}
+            </button>
+          </form>
+          <span>{{ task.title }}</span>
+          <form method="post" action="{{ url_for('main.delete_task', task_id=task.id) }}">
+            <button class="delete" title="Delete task" aria-label="Delete task">×</button>
+          </form>
+        </li>
+        {% else %}
+        <li class="empty">No tasks yet.</li>
+        {% endfor %}
+      </ul>
+    </section>
+    {% endfor %}
+  </main>
+</body>
+</html>
