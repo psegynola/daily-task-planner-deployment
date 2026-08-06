@@ -29,6 +29,7 @@ data "aws_iam_policy_document" "tf_backend" {
     actions = ["s3:GetObject", "s3:PutObject", "s3:DeleteObject"]
     resources = [
       # allow variants/prefixes if you ever use them
+      #the part here is the same path of the key added to s3 in main.tf
       "arn:aws:s3:::${var.tf_state_bucket}/daily-task-planner/*",
     ]
   }
