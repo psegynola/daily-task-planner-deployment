@@ -69,6 +69,8 @@ resource "aws_iam_user_policy_attachment" "tf_backend" {
 
 #This builds the policy document
 data "aws_iam_policy_document" "ecr" {
+  
+  #explain this better
   statement {
     effect    = "Allow"
     actions   = ["ecr:GetAuthorizationToken"]
