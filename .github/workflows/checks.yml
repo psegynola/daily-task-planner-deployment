@@ -3,3 +3,7 @@ name: Checks
 on:
   pull_request:
     branches: [ main ]
+
+jobs:
+  test-lint:
+    name: Test and Lint
