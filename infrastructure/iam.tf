@@ -87,6 +87,7 @@ data "aws_iam_policy_document" "ecr" {
   }
 }
 
+#This creates the document
 resource "aws_iam_policy" "ecr" {
   name        = "${aws_iam_user.cd.name}-ecr"
   description = "Allow user to manage ECR resources"
