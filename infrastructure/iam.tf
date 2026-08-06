@@ -26,6 +26,7 @@ data "aws_iam_policy_document" "tf_backend" {
     resources = ["arn:aws:s3:::${var.tf_state_bucket}"]
   }
 
+  #this statement is for the objects in the s3 bucket and should be different from the permissions of the entire bucket
   statement {
     effect  = "Allow"
     actions = ["s3:GetObject", "s3:PutObject", "s3:DeleteObject"]
