@@ -7,7 +7,7 @@ terraform {
       version = "5.23.0"
     }
   }
-
+#State Lock with DybamoDB Table is deprecated, use use_lockfile = true instead. See https://developer.hashicorp.com/terraform/language/settings/backends/s3#state-locking for more information.
   backend "s3" {
     bucket         = "fdivine-recipe-app-tf-state"
     key            = "daily-task-planner/terraform.tfstate"
