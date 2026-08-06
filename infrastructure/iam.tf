@@ -2,6 +2,7 @@
 # Create IAM user and policies for Continuous Deployment (CD) account #
 #######################################################################
 
+#this creates the IAM user for CD
 resource "aws_iam_user" "cd" {
   name = "daily-task-planner-cd"
 }
