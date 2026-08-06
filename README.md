@@ -68,3 +68,5 @@ pytest -q
 ## Important production note
 
 SQLite works well for local practice and a single application instance. For multiple ECS tasks or Kubernetes replicas, use PostgreSQL rather than sharing a SQLite file between containers.
+
+##testing pull requests
