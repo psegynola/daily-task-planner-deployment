@@ -9,3 +9,5 @@ jobs:
     name: Test and Lint
     uses: ./.github/workflows/test-lint.yml
     secrets:
+      DOCKERHUB_USER:
+      DOCKERHUB_TOKEN:
