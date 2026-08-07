@@ -1,0 +1,26 @@
+name: Destroy
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        description: Which environment to remove AWS resources for?
+        options:
+          - prod
+
+jobs:
+  destroy:
+    name: Destroy
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Terraform Destroy
+        env:
+          AWS_ACCESS_KEY_ID: ${{ vars.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          cd infrastructure/
+          docker compose run --rm terraform init
+          docker compose run --rm terraform destroy -auto-approve
