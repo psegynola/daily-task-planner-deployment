@@ -102,8 +102,8 @@ data "aws_iam_policy_document" "ecr" {
       "ecr:PutLifecyclePolicy",
       "ecr:GetLifecyclePolicy",
       "ecr:DeleteLifecyclePolicy"
-  ]
-    
+    ]
+
     resources = [aws_ecr_repository.app.arn]
   }
 }
