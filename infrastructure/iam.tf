@@ -69,7 +69,7 @@ resource "aws_iam_user_policy_attachment" "tf_backend" {
 
 #This builds the policy document
 data "aws_iam_policy_document" "ecr" {
-  
+
   #This helps us get the authorization token, so docker can authenticate with ECR
   statement {
     effect    = "Allow"
