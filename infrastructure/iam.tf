@@ -90,8 +90,20 @@ data "aws_iam_policy_document" "ecr" {
       "ecr:GetDownloadUrlForLayer",
       "ecr:DescribeRepositories",
       "ecr:DescribeImages",
-      "ecr:ListImages"
-    ]
+      "ecr:ListImages",
+
+      # Repository management (needed by Terraform)
+      "ecr:CreateRepository",
+      "ecr:DeleteRepository",
+      "ecr:ListTagsForResource",
+      "ecr:TagResource",
+      "ecr:UntagResource",
+      "ecr:PutImageScanningConfiguration",
+      "ecr:PutLifecyclePolicy",
+      "ecr:GetLifecyclePolicy",
+      "ecr:DeleteLifecyclePolicy"
+  ]
+    
     resources = [aws_ecr_repository.app.arn]
   }
 }
