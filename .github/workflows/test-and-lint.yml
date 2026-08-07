@@ -27,4 +27,4 @@ jobs:
 
       - name: Build and run tests
         run: |
-          docker compose run --rm app sh -c "pytest -q"
+          docker compose run --rm -e PYTHONPATH=/app app pytest -q -p no:cacheprovider
