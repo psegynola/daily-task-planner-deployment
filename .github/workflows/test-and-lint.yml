@@ -28,3 +28,24 @@ jobs:
       - name: Build and run tests
         run: |
           docker compose run --rm -e PYTHONPATH=/app app pytest -q -p no:cacheprovider
+
+  terraform:
+    name: Terraform
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Terraform lint
+        run: |
+          cd infrastructure/
+          docker compose run --rm terraform init -backend=false
+          docker compose run --rm terraform validate
+          docker compose run --rm terraform fmt -check
