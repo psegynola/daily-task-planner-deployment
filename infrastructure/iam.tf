@@ -77,7 +77,7 @@ data "aws_iam_policy_document" "ecr" {
     resources = ["*"]
   }
 
-  #explain more about this statement
+  #This allows us to push and manage the images
   statement {
     effect = "Allow"
     actions = [
