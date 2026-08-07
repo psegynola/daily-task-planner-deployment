@@ -27,3 +27,15 @@ variable "prefix" {
   type        = string
   default     = "dtp"
 }
+
+variable "db_username" {
+  description = "Username for the daily task planner api database"
+  type        = string
+  default     = "plannerapp"
+}
+
+variable "db_password" {
+  description = "Password for the daily task planner api database"
+  sensitive   = true
+  type        = string
+}
