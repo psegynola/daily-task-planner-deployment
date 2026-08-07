@@ -92,9 +92,7 @@ data "aws_iam_policy_document" "ecr" {
       "ecr:DescribeImages",
       "ecr:ListImages"
     ]
-    resources = [
-      aws_ecr_repository.app.arn
-    ]
+    resources = [aws_ecr_repository.app.arn]
   }
 }
 
