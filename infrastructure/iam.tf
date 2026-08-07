@@ -159,7 +159,8 @@ data "aws_iam_policy_document" "iam" {
       "iam:TagUser",
       "iam:CreatePolicyVersion",
       "iam:DeletePolicyVersion",
-      "iam:SetDefaultPolicyVersion"
+      "iam:SetDefaultPolicyVersion",
+      "iam:ListGroupsForUser",
     ]
     resources = ["*"]
   }
