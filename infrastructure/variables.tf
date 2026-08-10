@@ -50,3 +50,17 @@ variable "flask_secret_key" {
   type        = string
   sensitive   = true
 }
+
+variable "dns_zone_name" {
+  description = "Domain name"
+  default     = "psegynola.com"
+}
+
+variable "subdomain" {
+  description = "Subdomain for each environment"
+  type        = map(string)
+
+  default = {
+    prod = "api"
+  }
+}

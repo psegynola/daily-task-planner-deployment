@@ -76,6 +76,7 @@ resource "aws_ecs_task_definition" "api" {
           name  = "SECRET_KEY"
           value = var.flask_secret_key
         }
+
       ]
       logConfiguration = {
         logDriver = "awslogs"
