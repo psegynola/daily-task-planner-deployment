@@ -74,7 +74,7 @@ resource "aws_ecs_task_definition" "api" {
         },
         {
           name  = "SECRET_KEY"
-          value = var.flask_secret_key # rename to flask_secret_key if you prefer
+          value = var.flask_secret_key
         }
       ]
       logConfiguration = {
