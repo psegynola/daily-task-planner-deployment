@@ -54,8 +54,41 @@ resource "aws_ecs_task_definition" "api" {
   execution_role_arn       = aws_iam_role.task_execution_role.arn
   task_role_arn            = aws_iam_role.app_task.arn
 
-  container_definitions = jsonencode([])
-      
+  container_definitions = jsonencode([
+  {
+    name              = "api"
+    image             = var.ecr_app_image
+    essential         = true
+    memoryReservation = 256
+    portMappings = [
+      {
+        containerPort = 8000
+        hostPort      = 8000
+        protocol      = "tcp"
+      }
+    ]
+    environment = [
+      {
+        name  = "DATABASE_URL"
+        value = "postgresql+psycopg://${var.db_username}:${var.db_password}@${aws_db_instance.main.address}:5432/${aws_db_instance.main.db_name}"
+      },
+      {
+        name  = "SECRET_KEY"
+        value = var.flask_secret_key  # rename to flask_secret_key if you prefer
+      }
+    ]
+    logConfiguration = {
+      logDriver = "awslogs"
+      options = {
+        awslogs-group         = aws_cloudwatch_log_group.ecs_task_logs.name
+        awslogs-region        = data.aws_region.current.name
+        awslogs-stream-prefix = "api"
+      }
+    }
+  }
+])
+
+         
   runtime_platform {
     operating_system_family = "LINUX"
     cpu_architecture        = "X86_64"
