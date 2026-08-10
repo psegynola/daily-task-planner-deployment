@@ -56,10 +56,6 @@ resource "aws_ecs_task_definition" "api" {
 
   container_definitions = jsonencode([])
       
-  volume {
-    name = "static"
-  }
-
   runtime_platform {
     operating_system_family = "LINUX"
     cpu_architecture        = "X86_64"
