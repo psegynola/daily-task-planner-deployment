@@ -39,3 +39,14 @@ variable "db_password" {
   sensitive   = true
   type        = string
 }
+
+variable "ecr_app_image" {
+  description = "Path to the ECR repo with the API image"
+  type        = string
+}
+
+variable "flask_secret_key" {
+  description = "Flask SECRET_KEY"
+  type        = string
+  sensitive   = true
+}
