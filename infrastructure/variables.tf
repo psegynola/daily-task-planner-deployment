@@ -39,3 +39,8 @@ variable "db_password" {
   sensitive   = true
   type        = string
 }
+
+variable "ecr_app_image" {
+  description = "Path to the ECR repo with the API image"
+  type        = string
+}
