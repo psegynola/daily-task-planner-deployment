@@ -271,3 +271,73 @@ resource "aws_iam_user_policy_attachment" "rds" {
   user       = aws_iam_user.cd.name
   policy_arn = aws_iam_policy.rds.arn
 }
+
+#########################
+# Policy for ECS access #
+#########################
+
+data "aws_iam_policy_document" "ecs" {
+  statement {
+    effect = "Allow"
+    actions = [
+      "ecs:DescribeClusters",
+      "ecs:DeregisterTaskDefinition",
+      "ecs:DeleteCluster",
+      "ecs:DescribeServices",
+      "ecs:UpdateService",
+      "ecs:DeleteService",
+      "ecs:DescribeTaskDefinition",
+      "ecs:CreateService",
+      "ecs:RegisterTaskDefinition",
+      "ecs:CreateCluster",
+      "ecs:UpdateCluster",
+      "ecs:TagResource",
+    ]
+    resources = ["*"]
+  }
+}
+
+resource "aws_iam_policy" "ecs" {
+  name        = "${aws_iam_user.cd.name}-ecs"
+  description = "Allow user to manage ECS resources."
+  policy      = data.aws_iam_policy_document.ecs.json
+}
+
+resource "aws_iam_user_policy_attachment" "ecs" {
+  user       = aws_iam_user.cd.name
+  policy_arn = aws_iam_policy.ecs.arn
+}
+
+################################
+# Policy for CloudWatch access #
+################################
+
+data "aws_iam_policy_document" "logs" {
+  statement {
+    effect = "Allow"
+    actions = [
+      "logs:DeleteLogGroup",
+      "logs:DescribeLogGroups",
+      "logs:CreateLogGroup",
+      "logs:TagResource",
+      "logs:ListTagsLogGroup",
+      "logs:PutRetentionPolicy",
+      "logs:DeleteRetentionPolicy",
+      "logs:CreateLogStream",
+      "logs:PutLogEvents"
+    ]
+    resources = ["*"]
+  }
+}
+
+resource "aws_iam_policy" "logs" {
+  name        = "${aws_iam_user.cd.name}-logs"
+  description = "Allow user to manage CloudWatch resources."
+  policy      = data.aws_iam_policy_document.logs.json
+}
+
+resource "aws_iam_user_policy_attachment" "logs" {
+  user       = aws_iam_user.cd.name
+  policy_arn = aws_iam_policy.logs.arn
+}
+
