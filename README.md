@@ -57,3 +57,11 @@ Infrastructure is managed from infrastructure/ with Terraform, or through the Gi
 - Live AWS infrastructure may be destroyed when idle to control cost; this repo holds the code and architecture
 - Health check path used by the ALB: `/health`
 - Lesson learned: keeping the CD IAM user in the same Terraform state as the app made `destroy` invalidate CI credentials; a later improvement is splitting **setup** (user/keys) from **app** infrastructure
+
+## Possible next steps
+
+- Split Terraform into `setup` and `deploy` state stacks
+- Add dev/prod environments
+- Move runtime secrets to SSM Parameter Store or Secrets Manager
+- CloudWatch alarms on ALB target health and ECS service
+- Log retention on the ECS log group
