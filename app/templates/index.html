@@ -3,59 +3,210 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Daily Task Planner</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+  <meta
+    name="description"
+    content="Daily Task Planner deployed on AWS using Flask, ECS Fargate, RDS PostgreSQL, ALB, Terraform, and GitHub Actions."
+  >
+
+  <meta name="theme-color" content="#0f172a">
+
+  <title>Daily Task Planner · AWS Cloud Deployment</title>
+
+  <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}"
+  >
 </head>
+
 <body>
+
   <header class="topbar">
     <div>
-      <p class="eyebrow">Deployment Practice Project</p>
+      <p class="eyebrow">
+        AWS Cloud Deployment · ECS Fargate · RDS · Terraform
+      </p>
+
       <h1>Daily Task Planner</h1>
-      <p>Plan each day, save your tasks, and mark them complete.</p>
+
+      <p>
+        End-to-end cloud deployment: Flask on ECS Fargate,
+        PostgreSQL on RDS, ALB routing, and HTTPS.
+      </p>
+
+      <ul class="stack-badges">
+        <li>ECS Fargate</li>
+        <li>RDS PostgreSQL</li>
+        <li>ALB + HTTPS</li>
+        <li>Terraform</li>
+        <li>GitHub Actions</li>
+      </ul>
     </div>
-    <nav class="week-nav">
-      <a href="{{ url_for('main.index', date=(days[0] - timedelta(days=7)).isoformat()) }}">← Previous</a>
-      <a href="{{ url_for('main.index') }}">Today</a>
-      <a href="{{ url_for('main.index', date=(days[0] + timedelta(days=7)).isoformat()) }}">Next →</a>
+
+    <nav class="week-nav" aria-label="Week navigation">
+      <a
+        href="{{ url_for(
+          'main.index',
+          date=(days[0] - timedelta(days=7)).isoformat()
+        ) }}"
+      >
+        ← Previous
+      </a>
+
+      <a href="{{ url_for('main.index') }}">
+        Today
+      </a>
+
+      <a
+        href="{{ url_for(
+          'main.index',
+          date=(days[0] + timedelta(days=7)).isoformat()
+        ) }}"
+      >
+        Next →
+      </a>
     </nav>
   </header>
 
+
   <main class="planner-grid">
+
     {% for day in days %}
+
     <section class="day-card {% if day == selected %}selected{% endif %}">
+
       <div class="day-heading">
         <div>
           <h2>{{ day.strftime('%A') }}</h2>
           <p>{{ day.strftime('%b %d, %Y') }}</p>
         </div>
-        <span>{{ grouped[day]|length }} task{% if grouped[day]|length != 1 %}s{% endif %}</span>
+
+        <span>
+          {{ grouped[day]|length }}
+          task{% if grouped[day]|length != 1 %}s{% endif %}
+        </span>
       </div>
 
-      <form class="add-form" method="post" action="{{ url_for('main.create_task') }}">
-        <input type="hidden" name="task_date" value="{{ day.isoformat() }}">
-        <input name="title" maxlength="200" placeholder="Add a task..." required aria-label="Task title">
-        <button type="submit">Add</button>
+
+      <!-- Add Task -->
+      <form
+        class="add-form"
+        method="post"
+        action="{{ url_for('main.create_task') }}"
+      >
+
+        <input
+          type="hidden"
+          name="task_date"
+          value="{{ day.isoformat() }}"
+        >
+
+        <input
+          name="title"
+          maxlength="200"
+          placeholder="Add a task..."
+          required
+          aria-label="Task title"
+        >
+
+        <button type="submit">
+          Add
+        </button>
+
       </form>
 
+
+      <!-- Task List -->
       <ul class="task-list">
+
         {% for task in grouped[day] %}
+
         <li class="task-row {% if task.completed %}done{% endif %}">
-          <form method="post" action="{{ url_for('main.toggle_task', task_id=task.id) }}">
-            <button class="check" title="Toggle completion" aria-label="Toggle completion">
-              {% if task.completed %}✓{% else %}○{% endif %}
+
+          <!-- Toggle Completion -->
+          <form
+            method="post"
+            action="{{ url_for(
+              'main.toggle_task',
+              task_id=task.id
+            ) }}"
+          >
+
+            <button
+              class="check"
+              title="Toggle completion"
+              aria-label="Toggle completion"
+            >
+              {% if task.completed %}
+                ✓
+              {% else %}
+                ○
+              {% endif %}
             </button>
+
           </form>
+
+
           <span>{{ task.title }}</span>
-          <form method="post" action="{{ url_for('main.delete_task', task_id=task.id) }}">
-            <button class="delete" title="Delete task" aria-label="Delete task">×</button>
+
+
+          <!-- Delete Task -->
+          <form
+            method="post"
+            action="{{ url_for(
+              'main.delete_task',
+              task_id=task.id
+            ) }}"
+          >
+
+            <button
+              class="delete"
+              title="Delete task"
+              aria-label="Delete task"
+            >
+              ×
+            </button>
+
           </form>
+
         </li>
+
+
         {% else %}
-        <li class="empty">No tasks yet.</li>
+
+        <li class="empty">
+          No tasks yet — add one to verify the write path to RDS.
+        </li>
+
         {% endfor %}
+
       </ul>
+
     </section>
+
     {% endfor %}
+
   </main>
+
+
+  <footer class="site-footer">
+
+    <p>
+      Deployed with GitHub Actions · Terraform · ECS Fargate ·
+      RDS PostgreSQL · ALB · HTTPS
+    </p>
+
+    <p class="footer-links">
+      <a
+        href="https://github.com/psegynola/daily-task-planner-deployment"
+        target="_blank"
+        rel="noopener"
+      >
+        View on GitHub
+      </a>
+    </p>
+
+  </footer>
+
 </body>
 </html>
