@@ -50,7 +50,7 @@ Run tests:
 pytest -q
 ```
 
-Terraform code lives in `infrastructure/`. The deploy workflow runs `terraform apply` on push to `main`. You can also run Terraform locally from that folder.
+Terraform code lives in `infrastructure/` folder. The deploy workflow runs `terraform apply` on push to `main`. You can also run Terraform locally from that folder.
 
 ## Notes for reviewers
 
