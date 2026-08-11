@@ -45,7 +45,15 @@ docker compose up --build
 Open http://localhost:8000
 
 Run tests:
+
+```bash
 pytest -q
+```
 
 Infrastructure is managed from infrastructure/ with Terraform, or through the GitHub Actions deploy workflow.
 
+## Notes for reviewers
+
+- Live AWS infrastructure may be destroyed when idle to control cost; this repo holds the code and architecture
+- Health check path used by the ALB: `/health`
+- Lesson learned: keeping the CD IAM user in the same Terraform state as the app made `destroy` invalidate CI credentials; a later improvement is splitting **setup** (user/keys) from **app** infrastructure
