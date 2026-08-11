@@ -33,6 +33,7 @@ push to main
   → build & push image to ECR (tag = commit SHA)
   → terraform apply (image URI + secrets as TF_VAR_*)
   → ECS service picks up new task definition revision
+```
 
 ## Local development
 
