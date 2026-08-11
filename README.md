@@ -17,10 +17,19 @@ Production-style deployment of a Flask task planner on AWS using ECS Fargate, RD
 | IaC | Terraform (S3 backend + DynamoDB lock) |
 | CI/CD | GitHub Actions → ECR → Terraform apply |
 
-## Design decisions
+## Design Decisions
 
 - **No NAT gateway** — lower cost; tasks reach AWS services through VPC endpoints
 - **Private ECS tasks** — only the ALB is public; tasks accept traffic from the ALB security group on port 8000
 - **RDS in private subnets** — database is not internet-facing
 - **Immutable task definitions** — each new image tag creates a new revision and ECS rolls the service forward
 - **Single environment (v1)** — keep scope focused; a later improvement is splitting setup (CD user/keys) from app infrastructure
+
+## Pipeline
+
+```text
+push to main
+  → test & lint (pytest + terraform validate/fmt)
+  → build & push image to ECR (tag = commit SHA)
+  → terraform apply (image URI + secrets as TF_VAR_*)
+  → ECS service picks up new task definition revision
