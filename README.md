@@ -33,3 +33,15 @@ push to main
   → build & push image to ECR (tag = commit SHA)
   → terraform apply (image URI + secrets as TF_VAR_*)
   → ECS service picks up new task definition revision
+
+## Local development
+
+```bash
+docker compose up --build
+
+App: http://localhost:8000
+
+pytest -q
+
+Infrastructure is managed from infrastructure/ with Terraform (or via the GitHub Actions deploy workflow).
+text
