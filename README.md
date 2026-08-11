@@ -37,12 +37,15 @@ push to main
 
 ## Local development
 
+Start the app:
+
 ```bash
 docker compose up --build
+```
+Open http://localhost:8000
 
-App: http://localhost:8000
-
+Run tests:
 pytest -q
 
-Infrastructure is managed from infrastructure/ with Terraform (or via the GitHub Actions deploy workflow).
-text
+Infrastructure is managed from infrastructure/ with Terraform, or through the GitHub Actions deploy workflow.
+
