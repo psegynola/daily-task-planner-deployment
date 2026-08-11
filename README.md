@@ -50,7 +50,7 @@ Run tests:
 pytest -q
 ```
 
-Infrastructure is managed from infrastructure/ with Terraform, or through the GitHub Actions deploy workflow.
+Terraform code lives in `infrastructure/`. The deploy workflow runs `terraform apply` on push to `main`. You can also run Terraform locally from that folder.
 
 ## Notes for reviewers
 
